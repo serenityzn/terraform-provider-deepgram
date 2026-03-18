@@ -27,6 +27,22 @@ go.work.sum
 # env file
 .env
 
+# Terraform state and local config (may contain secrets)
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Provider binary
+terraform-provider-deepgram*
+
+# Key files
+*admin*key*
+*root*key*
+*admin*.pem
+*root*.pem
+*.key
+
 # Editor/IDE
 # .idea/
 # .vscode/
