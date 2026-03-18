@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -16,6 +17,7 @@ import (
 )
 
 var _ resource.Resource = &keyResource{}
+var _ resource.ResourceWithImportState = &keyResource{}
 
 type keyResource struct {
 	client *deepgram.Client
@@ -224,6 +226,29 @@ func (r *keyResource) Update(_ context.Context, _ resource.UpdateRequest, resp *
 		"Update not supported",
 		"Deepgram API keys cannot be updated in place. All changes force a replacement.",
 	)
+}
+
+// ImportState supports `terraform import deepgram_key.example <project_id>/<key_id>`.
+func (r *keyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	parts := strings.SplitN(req.ID, "/", 2)
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		resp.Diagnostics.AddError(
+			"Invalid import ID",
+			"Import ID must be in the format: <project_id>/<key_id>",
+		)
+		return
+	}
+
+	var state keyResourceModel
+	state.ProjectID = types.StringValue(parts[0])
+	state.ID = types.StringValue(parts[1])
+	// key is only available at creation time — set empty so Read can populate the rest
+	state.Key = types.StringValue("")
+	state.ExpirationDate = types.StringValue("")
+	state.Tags = types.ListValueMust(types.StringType, []attr.Value{})
+	state.Scopes = types.SetValueMust(types.StringType, []attr.Value{})
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 }
 
 func (r *keyResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
