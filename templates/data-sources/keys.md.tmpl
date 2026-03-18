@@ -1,0 +1,41 @@
+---
+page_title: "deepgram_keys Data Source - deepgram"
+subcategory: ""
+description: |-
+  Lists all API keys for a Deepgram project.
+---
+
+# deepgram_keys (Data Source)
+
+Retrieves all API keys associated with a Deepgram project.
+
+## Example Usage
+
+### List all key IDs
+
+```hcl
+data "deepgram_keys" "all" {
+  project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+
+output "key_ids" {
+  value = [for k in data.deepgram_keys.all.api_keys : k.api_key_id]
+}
+```
+
+### Use alongside a managed key
+
+```hcl
+resource "deepgram_key" "app" {
+  project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  comment    = "App key"
+  scopes     = toset(["usage:read"])
+}
+
+data "deepgram_keys" "all" {
+  project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  depends_on = [deepgram_key.app]
+}
+```
+
+{{ .SchemaMarkdown | trimspace }}

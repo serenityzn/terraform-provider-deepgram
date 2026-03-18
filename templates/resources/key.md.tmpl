@@ -1,0 +1,59 @@
+---
+page_title: "deepgram_key Resource - deepgram"
+subcategory: ""
+description: |-
+  Manages a Deepgram project API key.
+---
+
+# deepgram_key (Resource)
+
+Creates and manages an API key for a Deepgram project.
+
+~> **Note:** Deepgram API keys are **immutable** after creation. Any change to `comment`, `scopes`, `tags`, or `expiration_date` will destroy the existing key and create a new one. The secret `key` value is only available immediately after creation — retrieve it with `terraform output -raw <output_name>`.
+
+## Example Usage
+
+### Basic key
+
+```hcl
+resource "deepgram_key" "example" {
+  project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  comment    = "My application key"
+  scopes     = toset(["usage:read", "usage:write"])
+}
+
+output "api_key_secret" {
+  value     = deepgram_key.example.key
+  sensitive = true
+}
+```
+
+### Key with tags and expiration
+
+```hcl
+resource "deepgram_key" "ci" {
+  project_id      = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  comment         = "CI pipeline key"
+  scopes          = toset(["usage:read", "keys:write"])
+  tags            = ["ci", "terraform"]
+  expiration_date = "2027-01-01T00:00:00Z"
+}
+```
+
+### Retrieve the secret after apply
+
+```bash
+terraform output -raw api_key_secret
+```
+
+## Import
+
+Keys can be imported using `<project_id>/<key_id>`:
+
+```bash
+terraform import deepgram_key.example cb329428-b459-4030-bb54-86dff1ca7df0/your-key-id
+```
+
+~> **Note:** The secret `key` value cannot be recovered on import. It will be empty in state after importing.
+
+{{ .SchemaMarkdown | trimspace }}

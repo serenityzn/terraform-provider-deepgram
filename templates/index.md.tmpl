@@ -1,0 +1,30 @@
+---
+page_title: "Provider: Deepgram"
+description: |-
+  Use the Deepgram provider to manage API keys for your Deepgram projects.
+---
+
+# Deepgram Provider
+
+The Deepgram provider allows you to manage [Deepgram](https://deepgram.com) project API keys as infrastructure-as-code.
+
+Deepgram powers the Voice AI Economy — use this provider to automate the lifecycle of your Deepgram API keys across projects and environments.
+
+## Example Usage
+
+{{tffile "examples/provider/main.tf"}}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Authentication
+
+The provider requires a Deepgram API key with `keys:read` and `keys:write` scopes to manage keys.
+
+You can provide the key in two ways:
+
+- Set the `api_key` attribute in the provider block
+- Set the `DEEPGRAM_API_KEY` environment variable (recommended for CI/CD)
+
+```bash
+export DEEPGRAM_API_KEY="your-api-key"
+```
