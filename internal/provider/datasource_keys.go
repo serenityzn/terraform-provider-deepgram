@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/serenityzn/terraform-provider-deepgram-/internal/deepgram"
+	"github.com/serenityzn/terraform-provider-deepgram/internal/deepgram"
 )
 
 var _ datasource.DataSource = &keysDataSource{}

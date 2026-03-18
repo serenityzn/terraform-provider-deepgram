@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/serenityzn/terraform-provider-deepgram-/internal/provider"
+	"github.com/serenityzn/terraform-provider-deepgram/internal/provider"
 )
 
 var version string = "dev"

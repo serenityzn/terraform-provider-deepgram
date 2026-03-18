@@ -1,4 +1,4 @@
-module github.com/serenityzn/terraform-provider-deepgram-
+module github.com/serenityzn/terraform-provider-deepgram
 
 go 1.21
 
