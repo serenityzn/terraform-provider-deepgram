@@ -31,6 +31,36 @@ func NewClient(apiKey, baseURL string) *Client {
 	}
 }
 
+// Project types
+
+// Project represents a single Deepgram project.
+type Project struct {
+	ProjectID string `json:"project_id"`
+	Name      string `json:"name"`
+	MIPOptOut bool   `json:"mip_opt_out"`
+}
+
+// ListProjectsResponse is the response from listing projects.
+type ListProjectsResponse struct {
+	Projects []Project `json:"projects"`
+}
+
+// ListProjects retrieves all projects associated with the API key.
+func (c *Client) ListProjects(ctx context.Context) (*ListProjectsResponse, error) {
+	body, statusCode, err := c.doRequest(ctx, http.MethodGet, "/v1/projects", nil)
+	if err != nil {
+		return nil, err
+	}
+	if statusCode != http.StatusOK {
+		return nil, fmt.Errorf("list projects: unexpected status %d: %s", statusCode, string(body))
+	}
+	var resp ListProjectsResponse
+	if err := json.Unmarshal(body, &resp); err != nil {
+		return nil, fmt.Errorf("list projects: failed to unmarshal response: %w", err)
+	}
+	return &resp, nil
+}
+
 // CreateKeyRequest is the payload for creating an API key.
 type CreateKeyRequest struct {
 	Comment        string   `json:"comment"`
