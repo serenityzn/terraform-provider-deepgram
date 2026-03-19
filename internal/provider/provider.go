@@ -91,5 +91,6 @@ func (p *DeepgramProvider) DataSources(_ context.Context) []func() datasource.Da
 	return []func() datasource.DataSource{
 		NewKeysDataSource,
 		NewProjectsDataSource,
+		NewProjectDataSource,
 	}
 }
