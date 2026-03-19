@@ -1,7 +1,7 @@
 # Terraform Provider – Deepgram
 
 [![Terraform Registry](https://img.shields.io/badge/Terraform%20Registry-serenityzn%2Fdeepgram-blue)](https://registry.terraform.io/providers/serenityzn/deepgram/latest)
-[![License: MPL-2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A Terraform provider for managing [Deepgram](https://deepgram.com) resources as infrastructure-as-code.
 
@@ -236,4 +236,4 @@ terraform apply
 
 ## License
 
-[Mozilla Public License 2.0](LICENSE)
+[Apache License 2.0](LICENSE)
