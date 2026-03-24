@@ -80,23 +80,24 @@ type CreateKeyResponse struct {
 }
 
 // GetKeyResponse is the response from getting a single API key.
+// Actual API response shape:
+//
+//	{ "member": { ... }, "api_key": { "comment": "...", "scopes": [...], "tags": [...] } }
 type GetKeyResponse struct {
-	Item struct {
-		Member struct {
-			MemberID  string `json:"member_id"`
-			Email     string `json:"email"`
-			FirstName string `json:"first_name"`
-			LastName  string `json:"last_name"`
-			APIKey    struct {
-				APIKeyID       string   `json:"api_key_id"`
-				Comment        string   `json:"comment"`
-				Scopes         []string `json:"scopes"`
-				Tags           []string `json:"tags"`
-				ExpirationDate string   `json:"expiration_date"`
-				Created        string   `json:"created"`
-			} `json:"api_key"`
-		} `json:"member"`
-	} `json:"item"`
+	Member struct {
+		MemberID  string `json:"member_id"`
+		Email     string `json:"email"`
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+	} `json:"member"`
+	APIKey struct {
+		APIKeyID       string   `json:"api_key_id"`
+		Comment        string   `json:"comment"`
+		Scopes         []string `json:"scopes"`
+		Tags           []string `json:"tags"`
+		ExpirationDate string   `json:"expiration_date"`
+		Created        string   `json:"created"`
+	} `json:"api_key"`
 }
 
 // ListKeysResponseItem represents one key entry in the list response.

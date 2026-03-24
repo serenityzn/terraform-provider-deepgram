@@ -85,18 +85,16 @@ func TestGetKey_Success(t *testing.T) {
 			t.Errorf("expected GET, got %s", r.Method)
 		}
 		writeJSON(w, http.StatusOK, map[string]any{
-			"item": map[string]any{
-				"member": map[string]any{
-					"member_id":  "member-1",
-					"email":      "user@example.com",
-					"first_name": "John",
-					"last_name":  "Doe",
-					"api_key": map[string]any{
-						"api_key_id": "key-123",
-						"comment":    "test key",
-						"scopes":     []string{"usage:read"},
-					},
-				},
+			"member": map[string]any{
+				"member_id":  "member-1",
+				"email":      "user@example.com",
+				"first_name": "John",
+				"last_name":  "Doe",
+			},
+			"api_key": map[string]any{
+				"api_key_id": "key-123",
+				"comment":    "test key",
+				"scopes":     []string{"usage:read"},
 			},
 		})
 	})
@@ -108,11 +106,11 @@ func TestGetKey_Success(t *testing.T) {
 	if resp == nil {
 		t.Fatal("expected non-nil response")
 	}
-	if resp.Item.Member.APIKey.APIKeyID != "key-123" {
-		t.Errorf("expected api_key_id=key-123, got %s", resp.Item.Member.APIKey.APIKeyID)
+	if resp.APIKey.APIKeyID != "key-123" {
+		t.Errorf("expected api_key_id=key-123, got %s", resp.APIKey.APIKeyID)
 	}
-	if resp.Item.Member.Email != "user@example.com" {
-		t.Errorf("expected email=user@example.com, got %s", resp.Item.Member.Email)
+	if resp.Member.Email != "user@example.com" {
+		t.Errorf("expected email=user@example.com, got %s", resp.Member.Email)
 	}
 }
 

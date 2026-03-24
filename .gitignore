@@ -42,6 +42,7 @@ terraform-provider-deepgram*
 *admin*.pem
 *root*.pem
 *.key
+deepgram-key
 
 # Editor/IDE
 # .idea/

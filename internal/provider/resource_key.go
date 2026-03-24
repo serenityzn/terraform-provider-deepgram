@@ -195,7 +195,7 @@ func (r *keyResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 		return
 	}
 
-	apiKey := got.Item.Member.APIKey
+	apiKey := got.APIKey
 
 	state.Comment = types.StringValue(apiKey.Comment)
 
